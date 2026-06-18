@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Arduino Potentiometer</title>
+  <style>
+    body { 
+        color: #d9d9d9;
+        background: #000000;
+        font-family: Arial, sans-serif; 
+        text-align: center;
+        padding: 2rem;
+    }
+    h1 { margin-bottom: 1rem; }
+    #value { font-size: 24px; color: lime; }
+    button { margin: 5px; padding: 10px 20px; border-radius: 5px; border: none; cursor: pointer; }
+    button:hover { background: #333; }
+
+    /* Meter styling */
+    .meter-container {
+      width: 80%;
+      margin: 2rem auto;
+      background: #222;
+      border-radius: 10px;
+      padding: 1rem;
+    }
+    progress {
+      width: 100%;
+      height: 30px;
+      appearance: none;
+    }
+    progress::-webkit-progress-bar {
+      background: #444;
+      border-radius: 10px;
+    }
+    progress::-webkit-progress-value {
+      background: lime;
+      border-radius: 10px;
+    }
+    progress::-moz-progress-bar {
+      background: lime;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Arduino Potentiometer</h1>
+  <p>Current value: <span id="value">Loading...</span></p>
+
+  <div class="meter-container">
+    <progress id="meter" value="0" max="1023"></progress>
+  </div>
+  <h1>Arduino LED</h1>
+  <p> </p>
+  <button onclick="sendCommand('LED_ON')">Turn LED ON</button>
+  <button onclick="sendCommand('LED_OFF')">Turn LED OFF</button>
+
+  <script>
+    async function fetchData() {
+      try {
+        const response = await fetch('/arduino_raw');
+        const text = await response.text();
+        const val = parseInt(text);
+
+      
+        document.getElementById('value').innerText = val;
+
+      
+        document.getElementById('meter').value = val;
+      } catch (error) {
+        document.getElementById('value').innerText = "Error fetching data";
+      }
+    }
+
+    async function sendCommand(cmd) {
+      try {
+        const response = await fetch('/send/' + cmd);
+        const text = await response.text();
+        alert(text);
+      } catch (error) {
+        alert("Error sending command");
+      }
+    }
+
+    fetchData();
+    setInterval(fetchData, 50);
+  </script>
+  <a href="/main">Back to Home</a>
+</body>
+</html>

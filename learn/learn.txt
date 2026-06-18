@@ -1,0 +1,20 @@
+command:
+
+<a href="/">Back to Home</a>
+:for link to switch page
+
+{{data}}
+:html variable
+
+libary:
+render_template = to access html file
+request = to get data from user
+url_for,redirect = redirect route autoamtically
+
+Luminari, fantasy
+
+ngrok dont connect to public wifi
+app pwa
+server ngrok
+executer flask
+venv for flas environmwent

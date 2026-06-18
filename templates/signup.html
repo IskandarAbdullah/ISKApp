@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Signup</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-top: 15vh;
+        }
+        form {
+            margin-top: 30px;
+        }
+        input {
+            padding: 10px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #222;
+            color: #fff;
+            width: 250px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #444;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        button:hover {
+            background-color: #666;
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            color: #fff;
+            text-decoration: none;
+            background-color: #333;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+        a:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <h1>Signup</h1>
+    <form method="POST">
+        <input type="text" name="name" placeholder="Name" required><br>
+        <input type="password" name="password" placeholder="Password" required><br>
+        <button type="submit">Signup</button>
+    </form>
+    <a href="/">Go to Login</a>
+</body>
+</html>
