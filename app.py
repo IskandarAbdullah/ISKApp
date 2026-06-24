@@ -178,6 +178,44 @@ def bmi_history():
     records = BMIRecord.query.all()
     return render_template('bmi_history.html', records=records)
 
+@app.route('/download_history')
+def download_history():
+    import csv
+    from io import StringIO
+    from flask import send_file
+    
+    records = BMIRecord.query.all()
+    
+    output = StringIO()
+    writer = csv.writer(output)
+    writer.writerow(['ID', 'Name', 'Age', 'Gender', 'Weight (kg)', 'Height (cm)', 'BMI', 'Category'])
+    
+    for record in records:
+        writer.writerow([
+            record.id,
+            record.name,
+            record.age,
+            record.gender,
+            record.weight,
+            record.height,
+            record.bmi,
+            record.category
+        ])
+    
+    output.seek(0)
+    
+    from io import BytesIO
+    bytes_output = BytesIO()
+    bytes_output.write(output.getvalue().encode('utf-8'))
+    bytes_output.seek(0)
+    
+    return send_file(
+        bytes_output,
+        mimetype='text/csv',
+        as_attachment=True,
+        download_name='bmi_history.csv'
+    )
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()

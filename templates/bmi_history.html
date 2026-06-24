@@ -42,7 +42,13 @@
             margin: 0;
         }
 
-        .header a {
+        .header-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .header a, .download-btn {
             background: linear-gradient(135deg, #000000 0%, #000000 100%);
             color: white;
             padding: 10px 20px;
@@ -50,9 +56,12 @@
             text-decoration: none;
             font-weight: 600;
             transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
         }
 
-        .header a:hover {
+        .header a:hover, .download-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
         }
@@ -290,7 +299,10 @@
     <div class="container">
         <div class="header">
             <h1>📈 BMI History</h1>
-            <a href="/bmi">➕ Add New Record</a>
+            <div class="header-actions">
+                <a href="/bmi">➕ Add New Record</a>
+                <a href="/download_history" class="download-btn">⬇️ Download CSV</a>
+            </div>
         </div>
 
         {% if records %}
