@@ -112,6 +112,60 @@
             box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
         }
 
+        .download-section {
+            background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);
+            padding: 40px;
+            border-radius: 15px;
+            margin: 40px 0;
+            border: 2px solid #f0f0f0;
+        }
+
+        .download-section h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 24px;
+            color: #000000;
+            margin-bottom: 20px;
+        }
+
+        .download-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .download-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: white;
+            border: 2px solid #000000;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #000000;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .download-btn:hover {
+            background: #000000;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .download-btn-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .download-btn-text {
+            font-size: 14px;
+        }
+
         @media (max-width: 600px) {
             .header {
                 padding: 30px 20px;
@@ -188,6 +242,25 @@
                 <p>
                     To empower individuals with intelligent fitness tools that combine cutting-edge IoT technology with user-friendly interfaces, making health monitoring accessible, accurate, and actionable for everyone.
                 </p>
+            </div>
+
+            <div class="download-section">
+                <h2>📲 Get the App</h2>
+                <p style="color: #666; margin-bottom: 20px;">Install IoT Gym Pro on your device for the best experience.</p>
+                <div class="download-buttons">
+                    <a href="/" class="download-btn">
+                        <div class="download-btn-icon">📱</div>
+                        <div class="download-btn-text">Web App</div>
+                    </a>
+                    <a href="/" class="download-btn">
+                        <div class="download-btn-icon">🤖</div>
+                        <div class="download-btn-text">Android APK</div>
+                    </a>
+                    <a href="/" class="download-btn">
+                        <div class="download-btn-icon">🍎</div>
+                        <div class="download-btn-text">iOS App</div>
+                    </a>
+                </div>
             </div>
 
             <a href="/" class="back-link">← Back to Home</a>
