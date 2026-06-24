@@ -1,10 +1,12 @@
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory
-import serial, time,re
+import serial, time, re, os
 
 app = Flask(__name__)
 
 arduino = None
 last_value = "0"
+UPLOAD_FOLDER = "static/uploads"
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 def connect_arduino():
     global arduino
@@ -42,6 +44,7 @@ def send_command(command):
             return "Error sending command"
     else:
         return "Arduino not connected"
+
 @app.route('/')
 def home():
     return render_template('Home.html')
@@ -83,9 +86,11 @@ def signup():
         password = request.form['password']
         with open("users.txt", "r") as file:
             for line in file:
-                saved_name, saved_pass = line.strip().split(",")
-                if saved_name == name:
-                    return render_template('error.html')
+                parts = line.strip().split(",")
+                if len(parts) == 2:
+                    saved_name, saved_pass = parts
+                    if saved_name == name:
+                        return render_template('error.html')
         with open("users.txt", "a") as file:
             file.write(f"{name},{password}\n")
     return render_template('signup.html')
@@ -97,10 +102,47 @@ def get_name():
         password = request.form['password']
         with open("users.txt", "r") as file:
             for line in file:
-                saved_name, saved_pass = line.strip().split(",")
-                if name == saved_name and password == saved_pass:
-                    return redirect(url_for('mainpage', name=name))
+                parts = line.strip().split(",")
+                if len(parts) == 2:
+                    saved_name, saved_pass = parts
+                    if name == saved_name and password == saved_pass:
+                        return redirect(url_for('mainpage', name=name))
         return render_template('error.html')
+
+@app.route('/bmi', methods=['GET', 'POST'])
+def bmi():
+    if request.method == 'POST':
+        name = request.form.get("name")
+        age = int(request.form.get("age"))
+        gender = request.form.get("gender")
+        weight = float(request.form.get("weight"))
+        height = float(request.form.get("height"))
+
+        bmi_value = weight / ((height / 100) ** 2)
+
+        if bmi_value < 18.5:
+            category = "Underweight"
+        elif bmi_value < 25:
+            category = "Normal"
+        elif bmi_value < 30:
+            category = "Overweight"
+        else:
+            category = "Obese"
+
+        image = request.files.get("image")
+        image_path = None
+        if image:
+            filename = image.filename
+            image_path = os.path.join(UPLOAD_FOLDER, filename)
+            image.save(image_path)
+            image_path = url_for('static', filename=f'uploads/{filename}')
+
+        return render_template("bmi.html",
+                               name=name, age=age, gender=gender,
+                               weight=weight, height=height,
+                               bmi=round(bmi_value, 2), category=category,
+                               image_path=image_path)
+    return render_template("bmi.html")
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

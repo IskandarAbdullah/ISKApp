@@ -1,8 +1,8 @@
 {
-  "name": "Arduino PWA App",
+  "name": " Iskandar App",
   "short_name": "ISKApp",
   "description": "A progressive web app interface for your Arduino dashboard.",
-  "start_url": "https://aspirate-unnatural-gesture.ngrok-free.dev/main",
+  "start_url": "https://common-snails-sell.loca.lt",
   "scope": "/",
   "display": "standalone",
   "background_color": "#000000",
