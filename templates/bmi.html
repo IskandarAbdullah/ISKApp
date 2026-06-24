@@ -14,7 +14,7 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #000000 0%, #000000 100%);
             min-height: 100vh;
             padding: 20px;
         }
@@ -43,7 +43,7 @@
         }
 
         .header a {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #000000 0%, #000000 100%);
             color: white;
             padding: 10px 20px;
             border-radius: 8px;
@@ -105,7 +105,7 @@
         .form-group input:focus,
         .form-group select:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: #000000;
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
@@ -116,7 +116,7 @@
         .submit-btn {
             width: 100%;
             padding: 14px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #000000 0%, #000000 100%);
             color: white;
             border: none;
             border-radius: 10px;
@@ -161,8 +161,8 @@
 
         .file-input-label:hover {
             background: #f0f0f0;
-            border-color: #667eea;
-            color: #667eea;
+            border-color: #000000;
+            color: #000000;
         }
 
         .result-card {
@@ -196,7 +196,7 @@
         }
 
         .result-item span {
-            color: #667eea;
+            color: #000000;
             font-weight: 700;
             font-size: 16px;
         }
@@ -249,7 +249,10 @@
     <div class="container">
         <div class="header">
             <h1>📊 BMI Calculator</h1>
-            <a href="/bmi_history">📈 View History</a>
+            <div style="display: flex; gap: 10px;">
+                <a href="/">🏠 Back to Home</a>
+                <a href="/bmi_history">📈 View History</a>
+            </div>
         </div>
 
         <div class="content">
