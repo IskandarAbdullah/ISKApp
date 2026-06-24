@@ -1,113 +1,266 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>ISKANDAR WEBSITE</title>
-        <style>
-        body {
-            background-image: url(/static/Untitled2_20260612003525.png);
-            background-size: cover;      
-            background-repeat: no-repeat; 
-            background-attachment: fixed; 
-        }
-        h1 {
-            font-family: 'Roboto', sans-serif;
-            font-size: 42px;
-            color: #ffffff;
-            letter-spacing: 2px;  
-        }
-        p {
-            font-family: 'Roboto', sans-serif;
-            font-size: 12px;
-            color: #ffffff;
-            letter-spacing: 2px;   
-        }
-        p2 {
-            font-family: 'Roboto', sans-serif;
-            font-size: 12px;
-            color: #ffffff;
-            letter-spacing: 2px;  
-            height: 100vh;                
-            display: flex;
-            justify-content: center;     
-            align-items: flex-end;        
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IoT Gym App - Professional Fitness Monitoring</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
             margin: 0;
-
-        }
-        input[type="text"], input[type="password"] {
-            width: 250px;
-            padding: 8px;
-            gap: 20px;
-            border: 2px solid #4f4646;
-            border-radius: 20px;
-            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-            color: #0d0d20;
-            font-size: 16px;
-            transition: transform 0.2s;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        input[type="text"]:focus, input[type="password"]:focus {
-            transform: scale(1.06);
-            background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
-        }
-
-        input::placeholder {
-        color: rgb(4, 4, 34);          
-        font-style: italic;   
-        font-size: 14px;      
-        }
-        .form-container {
-        display: flex;
-        flex-direction: column; 
-        gap: 20px;   
-        align-items: center; 
-        margin-bottom: 12px;
-        }
-        img {
-            display: block;
-            margin: 0 auto;
-            max-width: 100%;
-            height: auto;
-        }
-        button {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #444;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background 0.3s ease;
-        }
-        button:hover {
-            background-color: #666;
-        }
-        .floating-widget {
-            display: block;
-            position: relative; 
-            top: 50%;                
-            left: 50%;                
-            transform: translate(-50%, -0%);  
-            width: 200px;
-            height: 200px;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
             align-items: center;
             justify-content: center;
-            flex-direction: column;
+            padding: 20px;
         }
 
-        .floating-widget img {
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            max-width: 500px;
+            width: 100%;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 32px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+            letter-spacing: 0.5px;
+        }
+
+        .carousel {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            background: #f5f5f5;
+            overflow: hidden;
+        }
+
+        .carousel img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            animation: slideIn 0.5s ease-in;
         }
 
+        @keyframes slideIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .carousel-controls {
+            position: absolute;
+            bottom: 15px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .carousel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .carousel-dot.active {
+            background: white;
+            width: 30px;
+            border-radius: 5px;
+        }
+
+        .content {
+            padding: 40px 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .form-group input::placeholder {
+            color: #999;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .login-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 25px 0;
+            color: #ccc;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #e0e0e0;
+        }
+
+        .divider span {
+            padding: 0 10px;
+            font-size: 13px;
+            color: #999;
+        }
+
+        .links {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .link-btn {
+            padding: 12px;
+            text-align: center;
+            background: #f5f5f5;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .link-btn:hover {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 26px;
+            }
+
+            .content {
+                padding: 30px 20px;
+            }
+
+            .carousel {
+                height: 200px;
+            }
+        }
     </style>
 </head>
 <body>
-    <h1 style="text-align: center;">DIETARY APP</h1>
-    <div style="opacity: 0.5;" class="floating-widget" id="widget">
-        <img src="{{ url_for('static', filename='illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg') }}" alt="Image 1">
+    <div class="container">
+        <div class="header">
+            <h1>🏋️ IoT Gym Pro</h1>
+            <p>Smart Fitness Monitoring System</p>
+        </div>
+
+        <div class="carousel" id="carousel">
+            <img id="carouselImg" src="{{ url_for('static', filename='illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg') }}" alt="Image">
+            <div class="carousel-controls" id="carouselControls"></div>
+        </div>
+
+        <div class="content">
+            <form action="/get_name" method="post">
+                <div class="form-group">
+                    <label for="name">Username</label>
+                    <input type="text" id="name" name="name" placeholder="Enter your username" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                </div>
+
+                <button type="submit" class="login-btn">Login</button>
+            </form>
+
+            <div class="divider"><span>or</span></div>
+
+            <div class="links">
+                <a href="/signup" class="link-btn">📝 Sign Up</a>
+                <a href="/about" class="link-btn">ℹ️ About</a>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -118,46 +271,42 @@
         ];
 
         let currentIndex = 0;
-        const widget = document.getElementById("widget").querySelector("img");
+        const carouselImg = document.getElementById('carouselImg');
+        const carouselControls = document.getElementById('carouselControls');
 
-        // Swipe logic (basic left/right with arrow keys)
-        document.addEventListener("keydown", (e) => {
-            if (e.key === "ArrowRight") {
-                currentIndex = (currentIndex + 1) % images.length;
-                widget.src = images[currentIndex];
-            }
-            if (e.key === "ArrowLeft") {
-                currentIndex = (currentIndex - 1 + images.length) % images.length;
-                widget.src = images[currentIndex];
-            }
+        images.forEach((_, index) => {
+            const dot = document.createElement('div');
+            dot.className = `carousel-dot ${index === 0 ? 'active' : ''}`;
+            dot.addEventListener('click', () => goToSlide(index));
+            carouselControls.appendChild(dot);
         });
 
-        // Touch swipe for mobile
-        let startX = 0;
-        widget.addEventListener("touchstart", (e) => {
-            startX = e.touches[0].clientX;
-        });
-        widget.addEventListener("touchend", (e) => {
-            let endX = e.changedTouches[0].clientX;
-            if (endX < startX) { // swipe left
-                currentIndex = (currentIndex + 1) % images.length;
-            } else if (endX > startX) { // swipe right
+        function updateCarousel() {
+            carouselImg.src = images[currentIndex];
+            document.querySelectorAll('.carousel-dot').forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentIndex);
+            });
+        }
+
+        function goToSlide(index) {
+            currentIndex = index;
+            updateCarousel();
+        }
+
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % images.length;
+            updateCarousel();
+        }
+
+        setInterval(nextSlide, 5000);
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') {
                 currentIndex = (currentIndex - 1 + images.length) % images.length;
+                updateCarousel();
             }
-            widget.src = images[currentIndex];
         });
     </script>
-    <p style="text-align: center;">login your account:</p>
-    <form style="text-align: center;" action="/get_name" method="post">
-        <div class="form-container">
-            <input type="text" name="name" placeholder="Your Name" required>
-            <input type="password" name="password" placeholder="Your Password" required>
-        </div>
-        <button type="submit">Login</button>
-    </form>
-    <p2 style="text-align: center;">Don't have an account? Sign up now!</p2>
-    <a href="/signup">Sign Up</a><br>
-    <a href="/about">About</a>
-    <a href="/arduino">Arduino Data</a>
 </body>
 </html>

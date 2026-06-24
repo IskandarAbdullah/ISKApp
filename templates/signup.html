@@ -2,66 +2,243 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Signup</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account - IoT Gym App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
     <style>
-        body {
-            background-color: #000;
-            color: #fff;
-            font-family: Arial, sans-serif;
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            max-width: 500px;
+            width: 100%;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
             text-align: center;
         }
-        h1 {
-            font-size: 2.5em;
-            margin-top: 15vh;
+
+        .header h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 32px;
+            margin-bottom: 10px;
+            font-weight: 700;
         }
-        form {
-            margin-top: 30px;
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+            letter-spacing: 0.5px;
         }
-        input {
-            padding: 10px;
-            margin: 10px;
+
+        .content {
+            padding: 40px 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .form-group input::placeholder {
+            color: #999;
+        }
+
+        .signup-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
             border: none;
-            border-radius: 5px;
-            background-color: #222;
-            color: #fff;
-            width: 250px;
-        }
-        button {
-            padding: 10px 20px;
-            background-color: #444;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
             cursor: pointer;
-            transition: background 0.3s ease;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
         }
-        button:hover {
-            background-color: #666;
+
+        .signup-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
         }
-        a {
-            display: inline-block;
-            margin-top: 20px;
-            color: #fff;
+
+        .signup-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 25px 0;
+            color: #ccc;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #e0e0e0;
+        }
+
+        .divider span {
+            padding: 0 10px;
+            font-size: 13px;
+            color: #999;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            padding: 12px;
+            background: #f5f5f5;
+            color: #667eea;
             text-decoration: none;
-            background-color: #333;
-            padding: 8px 15px;
-            border-radius: 5px;
-            transition: background 0.3s ease;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
         }
-        a:hover {
-            background-color: #555;
+
+        .back-link:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .password-strength {
+            margin-top: 8px;
+            height: 4px;
+            background: #e0e0e0;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .password-strength-fill {
+            height: 100%;
+            width: 0;
+            transition: width 0.3s ease;
+            background: #e74c3c;
+        }
+
+        .password-strength-fill.weak {
+            width: 33%;
+            background: #e74c3c;
+        }
+
+        .password-strength-fill.medium {
+            width: 66%;
+            background: #f39c12;
+        }
+
+        .password-strength-fill.strong {
+            width: 100%;
+            background: #2ecc71;
         }
     </style>
 </head>
 <body>
-    <h1>Signup</h1>
-    <form method="POST">
-        <input type="text" name="name" placeholder="Name" required><br>
-        <input type="password" name="password" placeholder="Password" required><br>
-        <button type="submit">Signup</button>
-    </form>
-    <a href="/">Go to Login</a>
+    <div class="container">
+        <div class="header">
+            <h1>🏋️ Create Account</h1>
+            <p>Join IoT Gym Pro Today</p>
+        </div>
+
+        <div class="content">
+            <form method="POST">
+                <div class="form-group">
+                    <label for="name">Username</label>
+                    <input type="text" id="name" name="name" placeholder="Choose your username" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Create a strong password" required onkeyup="checkPasswordStrength(this.value)">
+                    <div class="password-strength">
+                        <div class="password-strength-fill" id="strengthFill"></div>
+                    </div>
+                </div>
+
+                <button type="submit" class="signup-btn">Create Account</button>
+            </form>
+
+            <div class="divider"><span>or</span></div>
+
+            <a href="/" class="back-link">← Back to Login</a>
+        </div>
+    </div>
+
+    <script>
+        function checkPasswordStrength(password) {
+            const fill = document.getElementById('strengthFill');
+            let strength = 0;
+
+            if (password.length >= 8) strength++;
+            if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[^a-zA-Z0-9]/.test(password)) strength++;
+
+            fill.className = 'password-strength-fill';
+            if (strength === 1) fill.classList.add('weak');
+            else if (strength === 2 || strength === 3) fill.classList.add('medium');
+            else if (strength >= 4) fill.classList.add('strong');
+        }
+    </script>
 </body>
 </html>

@@ -1,90 +1,312 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Arduino Potentiometer</title>
-  <style>
-    body { 
-        color: #d9d9d9;
-        background: #000000;
-        font-family: Arial, sans-serif; 
-        text-align: center;
-        padding: 2rem;
-    }
-    h1 { margin-bottom: 1rem; }
-    #value { font-size: 24px; color: lime; }
-    button { margin: 5px; padding: 10px 20px; border-radius: 5px; border: none; cursor: pointer; }
-    button:hover { background: #333; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IoT Sensor Monitoring</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    /* Meter styling */
-    .meter-container {
-      width: 80%;
-      margin: 2rem auto;
-      background: #222;
-      border-radius: 10px;
-      padding: 1rem;
-    }
-    progress {
-      width: 100%;
-      height: 30px;
-      appearance: none;
-    }
-    progress::-webkit-progress-bar {
-      background: #444;
-      border-radius: 10px;
-    }
-    progress::-webkit-progress-value {
-      background: lime;
-      border-radius: 10px;
-    }
-    progress::-moz-progress-bar {
-      background: lime;
-      border-radius: 10px;
-    }
-  </style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            min-height: 100vh;
+            padding: 30px 20px;
+            color: #fff;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 36px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.8;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 22px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sensor-section {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .sensor-label {
+            font-size: 12px;
+            color: #b0e0e6;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .sensor-value {
+            font-size: 42px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            color: #00d4ff;
+            margin-bottom: 15px;
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+        }
+
+        .meter-container {
+            margin-top: 15px;
+        }
+
+        progress {
+            width: 100%;
+            height: 8px;
+            appearance: none;
+            border: none;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        progress::-webkit-progress-bar {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+        }
+
+        progress::-webkit-progress-value {
+            background: linear-gradient(90deg, #00d4ff, #0099cc);
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
+        }
+
+        progress::-moz-progress-bar {
+            background: linear-gradient(90deg, #00d4ff, #0099cc);
+            border-radius: 10px;
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: 2px solid transparent;
+        }
+
+        .btn-on {
+            background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+            color: #000;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+        }
+
+        .btn-on:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.6);
+        }
+
+        .btn-off {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-off:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #2ecc71;
+            margin-right: 8px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 30px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .specs {
+            font-size: 12px;
+            color: #b0e0e6;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .sensor-value {
+                font-size: 32px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <h1>Arduino Potentiometer</h1>
-  <p>Current value: <span id="value">Loading...</span></p>
+    <div class="container">
+        <div class="header">
+            <h1>🔌 IoT Sensor Monitoring</h1>
+            <p>Real-time Arduino Sensor Data</p>
+        </div>
 
-  <div class="meter-container">
-    <progress id="meter" value="0" max="1023"></progress>
-  </div>
-  <h1>Arduino LED</h1>
-  <p> </p>
-  <button onclick="sendCommand('LED_ON')">Turn LED ON</button>
-  <button onclick="sendCommand('LED_OFF')">Turn LED OFF</button>
+        <div class="content">
+            <!-- Sensor Monitoring Section -->
+            <div class="card">
+                <h2>
+                    <span class="status-indicator"></span>
+                    Potentiometer Sensor
+                </h2>
 
-  <script>
-    async function fetchData() {
-      try {
-        const response = await fetch('/arduino_raw');
-        const text = await response.text();
-        const val = parseInt(text);
+                <div class="sensor-section">
+                    <div class="sensor-label">Current Value</div>
+                    <div class="sensor-value" id="value">--</div>
+                    <div class="meter-container">
+                        <progress id="meter" value="0" max="1023"></progress>
+                    </div>
+                    <div class="specs">
+                        <strong>Range:</strong> 0-1023 | <strong>Unit:</strong> ADC
+                    </div>
+                </div>
+            </div>
 
-      
-        document.getElementById('value').innerText = val;
+            <!-- LED Control Section -->
+            <div class="card">
+                <h2>💡 LED Control</h2>
 
-      
-        document.getElementById('meter').value = val;
-      } catch (error) {
-        document.getElementById('value').innerText = "Error fetching data";
-      }
-    }
+                <div class="sensor-section">
+                    <div class="sensor-label">IoT Device Control</div>
+                    <p style="font-size: 13px; margin: 10px 0; opacity: 0.8;">Send commands to your Arduino board via IoT interface</p>
+                </div>
 
-    async function sendCommand(cmd) {
-      try {
-        const response = await fetch('/send/' + cmd);
-        const text = await response.text();
-        alert(text);
-      } catch (error) {
-        alert("Error sending command");
-      }
-    }
+                <div class="controls">
+                    <button class="btn btn-on" onclick="sendCommand('LED_ON')">
+                        ✓ Turn ON
+                    </button>
+                    <button class="btn btn-off" onclick="sendCommand('LED_OFF')">
+                        ✗ Turn OFF
+                    </button>
+                </div>
 
-    fetchData();
-    setInterval(fetchData, 50);
-  </script>
-  <a href="/main">Back to Home</a>
+                <div class="specs" style="margin-top: 20px;">
+                    <strong>Port:</strong> COM6 | <strong>Baudrate:</strong> 9600
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center;">
+            <a href="/main" class="back-btn">← Back to Dashboard</a>
+        </div>
+    </div>
+
+    <script>
+        async function fetchData() {
+            try {
+                const response = await fetch('/arduino_raw');
+                const text = await response.text();
+                const val = parseInt(text);
+
+                if (!isNaN(val)) {
+                    document.getElementById('value').innerText = val;
+                    document.getElementById('meter').value = val;
+                }
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+
+        async function sendCommand(cmd) {
+            try {
+                const response = await fetch('/send/' + cmd);
+                const text = await response.text();
+                alert(text);
+            } catch (error) {
+                alert("Error sending command");
+            }
+        }
+
+        fetchData();
+        setInterval(fetchData, 500);
+    </script>
 </body>
 </html>
