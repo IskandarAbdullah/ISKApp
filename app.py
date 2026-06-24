@@ -1,7 +1,22 @@
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory
+from flask_sqlalchemy import SQLAlchemy
 import serial, time, re, os
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///bmi.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
+
+class BMIRecord(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50))
+    age = db.Column(db.Integer)
+    gender = db.Column(db.String(10))
+    weight = db.Column(db.Float)
+    height = db.Column(db.Float)
+    bmi = db.Column(db.Float)
+    category = db.Column(db.String(20))
+    image_path = db.Column(db.String(200))
 
 arduino = None
 last_value = "0"
@@ -137,6 +152,20 @@ def bmi():
             image.save(image_path)
             image_path = url_for('static', filename=f'uploads/{filename}')
 
+        # Save to database
+        record = BMIRecord(
+            name=name,
+            age=age,
+            gender=gender,
+            weight=weight,
+            height=height,
+            bmi=round(bmi_value, 2),
+            category=category,
+            image_path=image_path
+        )
+        db.session.add(record)
+        db.session.commit()
+
         return render_template("bmi.html",
                                name=name, age=age, gender=gender,
                                weight=weight, height=height,
@@ -144,5 +173,12 @@ def bmi():
                                image_path=image_path)
     return render_template("bmi.html")
 
+@app.route('/bmi_history')
+def bmi_history():
+    records = BMIRecord.query.all()
+    return render_template('bmi_history.html', records=records)
+
 if __name__ == '__main__':
+    with app.app_context():
+        db.create_all()
     app.run(host='0.0.0.0', port=5000, debug=True)
