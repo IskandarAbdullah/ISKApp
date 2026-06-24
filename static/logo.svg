@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Background circle -->
+  <circle cx="100" cy="100" r="95" fill="none" stroke="#000" stroke-width="2"/>
+  
+  <!-- IoT nodes (connected dots) -->
+  <circle cx="60" cy="70" r="5" fill="#000"/>
+  <circle cx="140" cy="70" r="5" fill="#000"/>
+  <circle cx="100" cy="140" r="5" fill="#000"/>
+  
+  <!-- Connection lines forming network -->
+  <line x1="60" y1="70" x2="100" y2="140" stroke="#000" stroke-width="2"/>
+  <line x1="140" y1="70" x2="100" y2="140" stroke="#000" stroke-width="2"/>
+  <line x1="60" y1="70" x2="140" y2="70" stroke="#000" stroke-width="2"/>
+  
+  <!-- Dumbbell in center -->
+  <g transform="translate(100, 95)">
+    <!-- Left weight plate -->
+    <rect x="-28" y="-6" width="8" height="12" fill="#000" rx="1"/>
+    <!-- Bar -->
+    <rect x="-20" y="-3" width="40" height="6" fill="#000" rx="2"/>
+    <!-- Right weight plate -->
+    <rect x="20" y="-6" width="8" height="12" fill="#000" rx="1"/>
+  </g>
+  
+  <!-- Pulse lines (representing live data) -->
+  <path d="M 30 100 Q 40 95 50 100" stroke="#000" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <path d="M 150 100 Q 160 95 170 100" stroke="#000" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+</svg>
