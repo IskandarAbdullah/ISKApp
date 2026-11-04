@@ -1,0 +1,10 @@
+# Credentials and local data - never commit these
+users.txt
+*.db
+.env
+
+# Python / Flask runtime files
+__pycache__/
+*.py[cod]
+instance/
+.vscode/
